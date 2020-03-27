@@ -1,0 +1,25 @@
+li.motivacional {
+    background: #4507a1;
+    box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+li.motivacional div {
+    width: 100%;
+}
+
+li img {
+    height: 65px;
+    width: 65px;
+}
+
+li p {
+    color: #FFF;
+    font-size: 18px;
+    line-height: 20px;
+    margin: 10px 0;
+}

@@ -1,0 +1,12 @@
+div .card-container {
+    width: 500px;
+    margin: 50px;
+}
+
+div .card-container ul {
+    display: grid;
+    gap: 20px;
+    list-style: none;
+    margin-bottom: 20px;
+}
+
