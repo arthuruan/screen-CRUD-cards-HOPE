@@ -61,5 +61,11 @@ div .button-ud button {
 }
 
 div .button-ud button:hover {
-    background: rgba(65, 6, 153, 0.322)
+    background: #4507a1ce;
+    color: #ffff;
+}
+
+div .button-ud button:hover[type=delete] {
+    background: #ef233c;
+    color: #ffff;
 }

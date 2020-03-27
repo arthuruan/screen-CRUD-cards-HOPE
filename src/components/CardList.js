@@ -6,9 +6,10 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
+
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
 
 import '../styles/createCards.css';
 import '../styles/cards.css';
@@ -30,8 +31,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function addCardAction (typeId, text, title, id) {
-  return { type: 'ADD_CARD', typeId, text, title, id };
+function addCardAction (typeId, text, title) {
+  return { type: 'ADD_CARD', typeId, text, title };
 }
 
 export default function CardList() {
@@ -42,7 +43,7 @@ export default function CardList() {
   const [CardText, setCardText] = useState(null);
   const [CardType, setCardType] = useState(null);
   const [CardTitle, setCardTitle] = useState(null);
-  const [Cardid, setCardid] = useState(0);
+
 //menu
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -57,30 +58,38 @@ export default function CardList() {
 //
   function addCard() {
     if(CardText != '') {
-      let id = Cardid;
-      id ++;
-      setCardid(id);
-      dispatch(addCardAction(CardType, CardText, CardTitle, Cardid));
+      dispatch(addCardAction(CardType, CardText, CardTitle));
       setCardText('');
       setCardType('');
       setCardTitle('');
     }
   }
 
-  const Editar = () => {
-    console.log('Editar');
+  const Editar = (id) => {
+    console.log(id);
+    cards.map(card => {
+      if(card.id == id) {
+        console.log(card);
+        card.text = 'card editado';
+      }
+    });
     setAnchorEl(null);
   }
 
-  const Deletar = () => {
-    console.log('Deletar');
+  const Deletar = (id) => {
+    cards.map(card => {
+      if(card.id == id) {
+        card.id = null;
+        card.typeId = null;
+      }
+    });
     setAnchorEl(null);
   }
 
   return (
     <div className="container">
       <div className="card-container">
-        {/* {console.log(cards)} */}
+  
         <ul>
           { cards.map(card => (
               card.typeId === "dicas" && 
@@ -102,7 +111,6 @@ export default function CardList() {
                   <Menu
                     id="long-menu"
                     anchorEl={anchorEl}
-                    
                     open={open}
                     onClose={handleClose}
                     PaperProps={{
@@ -112,11 +120,11 @@ export default function CardList() {
                     }}
                   >
                     <div className="button-ud">
-                      <button onClick={Editar}>
+                      <button onClick={() => Editar(card.id)}>
                         Editar
                       </button>
 
-                      <button onClick={Deletar}>
+                      <button type="delete" onClick={() => Deletar(card.id)}>
                         Deletar
                       </button>
                     </div>
@@ -144,7 +152,6 @@ export default function CardList() {
                   <Menu
                     id="long-menu"
                     anchorEl={anchorEl}
-                    
                     open={open}
                     onClose={handleClose}
                     PaperProps={{
@@ -154,11 +161,11 @@ export default function CardList() {
                     }}
                   >
                     <div className="button-ud">
-                      <button onClick={Editar}>
+                      <button onClick={() => Editar(card.id)}>
                         Editar
                       </button>
 
-                      <button onClick={Deletar}>
+                      <button type="delete" onClick={() => Deletar(card.id)}>
                         Deletar
                       </button>
                     </div>
