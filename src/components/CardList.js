@@ -6,22 +6,21 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
-import TextareaAutosize from '@material-ui/core/TextareaAutosize';
-
-import IconButton from '@material-ui/core/IconButton';
-import Menu from '@material-ui/core/Menu';
-
 import '../styles/createCards.css';
 import '../styles/cards.css';
 import '../styles/global.css';
 import '../styles/cardDicas.css';
 import '../styles/cardFatos.css';
 import '../styles/cardMotivacional.css';
+import '../styles/editCards.css';
 
 import dicasIcon from '../icons/dicasIcon.png';
 import fatosIcon from '../icons/fatos.png';
 import motivacionalIcon from '../icons/motivacional.png';
+import pencilIcon from '../icons/pencil.png';
+import trashIcon from '../icons/trash.png';
 import points from '../icons/3points.png';
+import whitePoints from '../icons/3pointsW.png';
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -35,6 +34,14 @@ function addCardAction (typeId, text, title) {
   return { type: 'ADD_CARD', typeId, text, title };
 }
 
+function deleteCardAction (id) {
+  return { type: 'DELETE_CARD', id};
+}
+
+function editeCardAction (card) {
+  return { type: 'EDITE_CARD', card};
+}
+
 export default function CardList() {
   const classes = useStyles();
   const cards = useSelector(state => state.cards);
@@ -43,19 +50,11 @@ export default function CardList() {
   const [CardText, setCardText] = useState(null);
   const [CardType, setCardType] = useState(null);
   const [CardTitle, setCardTitle] = useState(null);
+  const [EditCard, setEditCard] = useState(false);
+  const [upCard, setUpCard] = useState(null);
+  const [UpCardText, setUpCardText] = useState(null);
+  const [UpCardTitle, setUpCardTitle] = useState(null);
 
-//menu
-  const [anchorEl, setAnchorEl] = useState(null);
-
-  const open = Boolean(anchorEl);
-
-  const handleClick = event => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-//
   function addCard() {
     if(CardText != '') {
       dispatch(addCardAction(CardType, CardText, CardTitle));
@@ -65,29 +64,33 @@ export default function CardList() {
     }
   }
 
-  const Editar = (id) => {
-    console.log(id);
-    cards.map(card => {
-      if(card.id == id) {
-        console.log(card);
-        card.text = 'card editado';
-      }
-    });
-    setAnchorEl(null);
+  function deleteCard(id) {
+    dispatch(deleteCardAction(id));
   }
 
-  const Deletar = (id) => {
-    cards.map(card => {
-      if(card.id == id) {
-        card.id = null;
-        card.typeId = null;
-      }
-    });
-    setAnchorEl(null);
+  const editarCard = () => {
+
+    if(upCard.typeId == 'dicas'){
+      upCard.title = UpCardTitle;
+    }
+    upCard.text = UpCardText;
+    dispatch(editeCardAction(upCard));
+    
+    setEditCard(false);
+    setUpCard(null);
+    setUpCardText('');
+    setUpCardTitle('');
+  }
+
+  const editar = (card) => {
+    // let newCard = Object.assign({}, parametro);
+    setEditCard(true);
+    setUpCard(card);
   }
 
   return (
     <div className="container">
+
       <div className="card-container">
   
         <ul>
@@ -97,38 +100,15 @@ export default function CardList() {
                 <img src={dicasIcon} />
                 <div className="dicas-container">
                   <h1>{card.title}</h1>
-                  <p>{card.text}</p>
+                  <p align="justify" >{card.text}</p>
                 </div>
-                <div className="button-points">
-                  <IconButton
-                    aria-label="more"
-                    aria-controls="long-menu"
-                    aria-haspopup="true"
-                    onClick={handleClick}
-                  >
-                    <img src={points} />
-                  </IconButton>
-                  <Menu
-                    id="long-menu"
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleClose}
-                    PaperProps={{
-                      style: {
-                        width: '20ch',
-                      },
-                    }}
-                  >
-                    <div className="button-ud">
-                      <button onClick={() => Editar(card.id)}>
-                        Editar
-                      </button>
-
-                      <button type="delete" onClick={() => Deletar(card.id)}>
-                        Deletar
-                      </button>
-                    </div>
-                  </Menu>
+                <div className="button-ud">
+                  <button onClick={() => editar(card)}>
+                    <img src={pencilIcon} />
+                  </button>
+                  <button onClick={() => deleteCard(card.id)}>
+                    <img src={trashIcon} />
+                  </button>
                 </div>
               </li>
           ))}
@@ -140,114 +120,153 @@ export default function CardList() {
                   <h1>{card.title = 'Curiosidade'}</h1>
                   <p>{card.text}</p>
                 </div>
-                  <div className="button-points">
-                  <IconButton
-                    aria-label="more"
-                    aria-controls="long-menu"
-                    aria-haspopup="true"
-                    onClick={handleClick}
-                  >
-                    <img src={points} />
-                  </IconButton>
-                  <Menu
-                    id="long-menu"
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleClose}
-                    PaperProps={{
-                      style: {
-                        width: '20ch',
-                      },
-                    }}
-                  >
-                    <div className="button-ud">
-                      <button onClick={() => Editar(card.id)}>
-                        Editar
-                      </button>
-
-                      <button type="delete" onClick={() => Deletar(card.id)}>
-                        Deletar
-                      </button>
-                    </div>
-                  </Menu>
+                <div className="button-ud">
+                  <button onClick={() => editar(card)}>
+                    <img src={pencilIcon} />
+                  </button>
+                  <button onClick={() => deleteCard(card.id)}>
+                    <img src={trashIcon} />
+                  </button>
                 </div>
               </li>
           ))}
           { cards.map(card => (
               card.typeId === "motivacional" && 
               <li className="motivacional" key={card.id}>
-                <img src={motivacionalIcon} />
-                <p>{card.text}</p>
+                <div className="motivacional-container">
+                  <img src={motivacionalIcon} />
+                  <p>{card.text}</p>
+                </div>
+                <div className="button-ud">
+                  <button onClick={() => editar(card)}>
+                    <img src={pencilIcon} />
+                  </button>
+                  <button onClick={() => deleteCard(card.id)}>
+                    <img src={trashIcon} />
+                  </button>
+                </div>
               </li>
           ))}
         </ul>
 
-    
       </div>
-
-      <div className="create-container">
+      <>
+        { 
+          EditCard === false &&
         
-        <font>Criar Cards</font>
+          <div className="create-container">
+            
+            <font>Criar Cards</font>
 
-        <FormControl className={classes.formControl}>
-          <InputLabel htmlFor="type-card-simple">Tipo</InputLabel>
-          <Select
-            native
-            value={CardType}
-            onChange={(e) => setCardType(e.target.value)}
-          >
-            <option aria-label="None" value="" />
-            <option value={'dicas'}>Dicas</option>
-            <option value={'fatos'}>Fatos</option>
-            <option value={'motivacional'}>Motivacional</option>
-          </Select>
-        </FormControl>
+            <FormControl className={classes.formControl}>
+              <InputLabel htmlFor="type-card-simple">Tipo</InputLabel>
+              <Select
+                native
+                value={CardType}
+                onChange={(e) => setCardType(e.target.value)}
+              >
+                <option aria-label="None" value="" />
+                <option value={'dicas'}>Dicas</option>
+                <option value={'fatos'}>Fatos</option>
+                <option value={'motivacional'}>Motivacional</option>
+              </Select>
+            </FormControl>
 
+            {
+              (CardType === 'motivacional' || CardType === 'fatos') &&
+              <>
+                <label htmlFor="textCard">
+                  Descrição
+                </label>
+
+                <textarea 
+                  value={CardText}
+                  onChange={(e) => setCardText(e.target.value)}
+                />
+              </>
+            }
+
+            {
+              (CardType === 'dicas') &&
+              <>
+                <label htmlFor="textCard">
+                  Título
+                </label>
+
+                <input 
+                  type="text"
+                  value={CardTitle}
+                  onChange={(e) => setCardTitle(e.target.value)}
+                />
+
+                <label htmlFor="textCard">
+                  Descrição
+                </label>
+
+                <textarea 
+                  value={CardText}
+                  onChange={(e) => setCardText(e.target.value)}
+                />
+
+              </>
+            }
+
+            <button type="button" onClick={addCard}>
+              NOVO CARD
+            </button>
+          </div>
+        }
         {
-          (CardType === 'motivacional' || CardType === 'fatos') &&
-          <>
-            <label htmlFor="textCard">
-              Descrição
-            </label>
+          EditCard &&
+            <div className="edit-container">
+              <font>Editar Cards</font>
+            {
+              upCard && (upCard.typeId === 'motivacional' || upCard.typeId === 'fatos') &&
+                <>
+                  <form>
+                    <label htmlFor="textCard">
+                      Descrição
+                    </label>
 
-            <input 
-              type="text"
-              value={CardText}
-              onChange={(e) => setCardText(e.target.value)}
-            />
-          </>
+                    <textarea 
+                      value={UpCardText}
+                      onChange={(e) => setUpCardText(e.target.value)}
+                    />
+                  </form>
+                </>
+            }
+            {
+              upCard && (upCard.typeId === 'dicas') &&
+                <>
+                  <form>
+                    <label htmlFor="tituloCard">
+                      Título
+                    </label>
+
+                    <input 
+                      value={UpCardTitle}
+                      onChange={(e) => setUpCardTitle(e.target.value)}
+                    />
+
+                    <label htmlFor="textCard">
+                      Descrição
+                    </label>
+
+                    <textarea 
+                      value={UpCardText}
+                      onChange={(e) => setUpCardText(e.target.value)}
+                    />
+                  </form>
+                  
+                </>
+            }
+              <button type="button" onClick={editarCard}>
+                EDITAR
+              </button>
+            </div>
         }
 
-        {
-          (CardType === 'dicas') &&
-          <>
-            <label htmlFor="textCard">
-              Título
-            </label>
-
-            <input 
-              type="text"
-              value={CardTitle}
-              onChange={(e) => setCardTitle(e.target.value)}
-            />
-
-            <label htmlFor="textCard">
-              Descrição
-            </label>
-
-            <input 
-              type="text"
-              value={CardText}
-              onChange={(e) => setCardText(e.target.value)}
-            />
-          </>
-        }
-
-
-        <button type="button" onClick={addCard}>
-          NOVO CARD
-        </button>
-      </div>
+      </>
       
     </div>
 

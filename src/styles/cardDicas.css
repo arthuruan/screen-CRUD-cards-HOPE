@@ -33,7 +33,7 @@ li img {
 li .dicas-container h1 {
     display: block;
     font-size: 17px;
-    width: 310px;
+    width: 315px;
     color: #333;
 }
 
@@ -45,27 +45,4 @@ li .dicas-container p {
     margin: 10px 0;
 }
 
-div .button-ud {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    /* margin-left: 20px; */
-}
 
-div .button-ud button {
-    border: 0;
-    padding: 5px;
-    width: 100%;
-    background-color: #ffff;
-    font-size: 16px;
-}
-
-div .button-ud button:hover {
-    background: #4507a1ce;
-    color: #ffff;
-}
-
-div .button-ud button:hover[type=delete] {
-    background: #ef233c;
-    color: #ffff;
-}

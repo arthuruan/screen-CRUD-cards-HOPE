@@ -1,9 +1,4 @@
-div .container {
-    display: flex;
-    flex-direction: row;
-}
-
-div .create-container {
+div .edit-container {
     height: fit-content;
     display: flex;
     flex-direction: column;
@@ -18,16 +13,16 @@ div .create-container {
     box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.2);
 }
 
-div .create-container font {
+div .edit-container font {
     text-align: center;
-    margin-top: 10px;
+    margin: 10px 0px;
     font-size: 24px;
     font-weight: 350;
     letter-spacing: -.5px;
     color: #6E6D6D;
 }
 
-div .create-container label {
+div .edit-container label {
     display: block;
     margin-bottom: 8px;
     margin-left: 3px;
@@ -35,7 +30,20 @@ div .create-container label {
     color: #ACACAC;
 }
 
-div .create-container input {
+div .edit-container textarea {
+    overflow: auto;
+    resize: none;
+    width: 100%;
+    height: 80px;
+    font-size: 16px;
+    border: 0;
+    border-bottom: 1px solid rgba(58, 57, 57, 0.568);
+    padding: 1px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+div .edit-container input {
     width: 100%;
     height: 32px;
     font-size: 16px;
@@ -46,20 +54,7 @@ div .create-container input {
     margin-bottom: 10px;
 }
 
-div .create-container textarea {
-    overflow: auto;
-    resize: none;
-    width: 100%;
-    height: 80px;
-    font-size: 16px;
-    border: 0;
-    padding: 1px;
-    color: #666;
-    margin-bottom: 10px;
-    border-bottom: 1px solid rgba(58, 57, 57, 0.568);
-}
-
-div .create-container button {
+div .edit-container button {
     font-weight: bold;
     cursor: pointer;
     width: 100%;
@@ -73,6 +68,6 @@ div .create-container button {
     transition: background 0.5s;
 }
 
-div .create-container button:hover {
+div .edit-container button:hover {
     background: #590ec9;
 }

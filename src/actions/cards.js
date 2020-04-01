@@ -6,3 +6,17 @@ export function addCard(text, title, typeId) {
         title,
     }
 }
+
+export function DeleteCard(id) {
+    return {
+        type: 'DELETE_CARD',
+        id,
+    }
+}
+
+export function EditCard(card) {
+    return {
+        type: 'EDITE_CARD',
+        card
+    }
+}

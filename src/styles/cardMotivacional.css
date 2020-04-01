@@ -2,14 +2,9 @@ li.motivacional {
     background: #4507a1;
     box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.2);
     border-radius: 10px;
-    padding: 30px;
+    padding: 25px;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-li.motivacional div {
-    width: 100%;
+    flex-direction: row;
 }
 
 li img {
@@ -17,9 +12,28 @@ li img {
     width: 65px;
 }
 
-li p {
+li .motivacional-container {
+    display: block;
+    text-align: center;
+}
+
+li .motivacional-container p {
     color: #FFF;
+    width: 420px;
     font-size: 18px;
     line-height: 20px;
     margin: 10px 0;
 }
+
+li .button-pointsW {
+    height: 40px;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+li .button-pointsW img{
+    height: 20px;
+    width: 20px;
+} 
