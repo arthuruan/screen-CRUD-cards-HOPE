@@ -49,6 +49,7 @@ div .create-container input {
 div .create-container textarea {
     overflow: auto;
     resize: none;
+    font-family: unset;
     width: 100%;
     height: 80px;
     font-size: 16px;

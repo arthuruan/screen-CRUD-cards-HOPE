@@ -2,7 +2,7 @@ li.motivacional {
     background: #4507a1;
     box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.2);
     border-radius: 10px;
-    padding: 25px;
+    padding: 23px 20px;
     display: flex;
     flex-direction: row;
 }
@@ -15,11 +15,13 @@ li img {
 li .motivacional-container {
     display: block;
     text-align: center;
+    max-width: 435px;
+    word-wrap: break-word;
 }
 
 li .motivacional-container p {
     color: #FFF;
-    width: 420px;
+    width: 450px;
     font-size: 18px;
     line-height: 20px;
     margin: 10px 0;

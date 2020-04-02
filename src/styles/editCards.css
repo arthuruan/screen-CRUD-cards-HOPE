@@ -33,6 +33,7 @@ div .edit-container label {
 div .edit-container textarea {
     overflow: auto;
     resize: none;
+    font-family: unset;
     width: 100%;
     height: 80px;
     font-size: 16px;
@@ -54,7 +55,7 @@ div .edit-container input {
     margin-bottom: 10px;
 }
 
-div .edit-container button {
+div .edit-container button[type=button] {
     font-weight: bold;
     cursor: pointer;
     width: 100%;
@@ -68,6 +69,21 @@ div .edit-container button {
     transition: background 0.5s;
 }
 
-div .edit-container button:hover {
+div .edit-container button[type=submit] {
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    border: 0.5;
+    border-color: #4507a1;
+    margin-top: 20px;
+    border-radius: 6px;
+    padding: 12px 20px;
+    font-size: 16px;
+    background: #fff;
+    color: #4507a1;
+    transition: background 0.5s;
+}
+
+div .edit-container button:hover[type=button] {
     background: #590ec9;
 }

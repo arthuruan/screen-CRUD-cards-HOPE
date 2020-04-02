@@ -19,8 +19,8 @@ import fatosIcon from '../icons/fatos.png';
 import motivacionalIcon from '../icons/motivacional.png';
 import pencilIcon from '../icons/pencil.png';
 import trashIcon from '../icons/trash.png';
-import points from '../icons/3points.png';
-import whitePoints from '../icons/3pointsW.png';
+import wPencilIcon from '../icons/wpencil.png';
+import wTrashIcon from '../icons/wtrash.png';
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -69,11 +69,9 @@ export default function CardList() {
   }
 
   const editarCard = () => {
-
-    if(upCard.typeId == 'dicas'){
-      upCard.title = UpCardTitle;
-    }
+    upCard.title = UpCardTitle;
     upCard.text = UpCardText;
+
     dispatch(editeCardAction(upCard));
     
     setEditCard(false);
@@ -83,7 +81,6 @@ export default function CardList() {
   }
 
   const editar = (card) => {
-    // let newCard = Object.assign({}, parametro);
     setEditCard(true);
     setUpCard(card);
   }
@@ -139,10 +136,10 @@ export default function CardList() {
                 </div>
                 <div className="button-ud">
                   <button onClick={() => editar(card)}>
-                    <img src={pencilIcon} />
+                    <img src={wPencilIcon} />
                   </button>
                   <button onClick={() => deleteCard(card.id)}>
-                    <img src={trashIcon} />
+                    <img src={wTrashIcon} />
                   </button>
                 </div>
               </li>
@@ -175,38 +172,42 @@ export default function CardList() {
             {
               (CardType === 'motivacional' || CardType === 'fatos') &&
               <>
-                <label htmlFor="textCard">
-                  Descrição
-                </label>
+                <form>
+                  <label htmlFor="textCard">
+                    Descrição
+                  </label>
 
-                <textarea 
-                  value={CardText}
-                  onChange={(e) => setCardText(e.target.value)}
-                />
+                  <textarea 
+                    value={CardText}
+                    onChange={(e) => setCardText(e.target.value)}
+                  />
+                </form>
               </>
             }
 
             {
               (CardType === 'dicas') &&
               <>
-                <label htmlFor="textCard">
-                  Título
-                </label>
+                <form>
+                  <label htmlFor="textCard">
+                    Título
+                  </label>
 
-                <input 
-                  type="text"
-                  value={CardTitle}
-                  onChange={(e) => setCardTitle(e.target.value)}
-                />
+                  <input 
+                    type="text"
+                    value={CardTitle}
+                    onChange={(e) => setCardTitle(e.target.value)}
+                  />
 
-                <label htmlFor="textCard">
-                  Descrição
-                </label>
+                  <label htmlFor="textCard">
+                    Descrição
+                  </label>
 
-                <textarea 
-                  value={CardText}
-                  onChange={(e) => setCardText(e.target.value)}
-                />
+                  <textarea 
+                    value={CardText}
+                    onChange={(e) => setCardText(e.target.value)}
+                  />
+                </form>
 
               </>
             }
@@ -262,6 +263,10 @@ export default function CardList() {
             }
               <button type="button" onClick={editarCard}>
                 EDITAR
+              </button>
+
+              <button className="back" type="submit" onClick={() => setEditCard(false)}>
+                VOLTAR
               </button>
             </div>
         }

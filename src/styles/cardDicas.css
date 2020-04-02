@@ -2,14 +2,16 @@ li.dicas {
     background: #fff;
     box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.2);
     border-radius: 10px;
-    padding: 25px;
+    padding: 23px 20px;
     display: flex;
     flex-direction: row;
 }
 
 li .dicas-container {
     display: block;
-    margin-left: 40px;
+    margin-left: 20px;
+    max-width: 350px;
+    word-wrap: break-word;
 }
 
 li .button-points {
@@ -33,12 +35,12 @@ li img {
 li .dicas-container h1 {
     display: block;
     font-size: 17px;
-    width: 315px;
+    width: 350px;
     color: #333;
 }
 
 li .dicas-container p {
-    
+    line-break: normal;
     color: #666;
     font-size: 15px;
     line-height: 20px;
