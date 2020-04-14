@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-
+//material-ui
 import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-
+//styles
 import '../styles/createCards.css';
 import '../styles/cards.css';
 import '../styles/global.css';
@@ -13,7 +13,7 @@ import '../styles/cardDicas.css';
 import '../styles/cardFatos.css';
 import '../styles/cardMotivacional.css';
 import '../styles/editCards.css';
-
+//icons
 import dicasIcon from '../icons/dicasIcon.png';
 import fatosIcon from '../icons/fatos.png';
 import motivacionalIcon from '../icons/motivacional.png';
@@ -21,6 +21,10 @@ import pencilIcon from '../icons/pencil.png';
 import trashIcon from '../icons/trash.png';
 import wPencilIcon from '../icons/wpencil.png';
 import wTrashIcon from '../icons/wtrash.png';
+//actions
+import { addCard, deleteCard, editCard } from '../store/ducks/cards';
+
+import { getAllCards, addCardFetch } from '../store/fetchActions';
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -30,23 +34,11 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function addCardAction (typeId, text, title) {
-  return { type: 'ADD_CARD', typeId, text, title };
-}
-
-function deleteCardAction (id) {
-  return { type: 'DELETE_CARD', id};
-}
-
-function editeCardAction (card) {
-  return { type: 'EDITE_CARD', card};
-}
-
 export default function CardList() {
   const classes = useStyles();
   const cards = useSelector(state => state.cards);
   const dispatch = useDispatch();
-
+  //state
   const [CardText, setCardText] = useState(null);
   const [CardType, setCardType] = useState(null);
   const [CardTitle, setCardTitle] = useState(null);
@@ -55,24 +47,36 @@ export default function CardList() {
   const [UpCardText, setUpCardText] = useState(null);
   const [UpCardTitle, setUpCardTitle] = useState(null);
 
-  function addCard() {
+  useEffect(() => {
+    dispatch(getAllCards());
+    console.log(cards);
+  }, [dispatch]);
+
+  function createCard() {
     if(CardText != '') {
-      dispatch(addCardAction(CardType, CardText, CardTitle));
+      let newCard = {
+        typeId: CardType,
+        text: CardText,
+        title: CardTitle
+      }
+      console.log(cards);
+      dispatch(addCardFetch(newCard));
       setCardText('');
       setCardType('');
       setCardTitle('');
+      newCard = null;
     }
   }
 
-  function deleteCard(id) {
-    dispatch(deleteCardAction(id));
+  function destroyCard(id) {
+    dispatch(deleteCard(id));
   }
 
   const editarCard = () => {
     upCard.title = UpCardTitle;
     upCard.text = UpCardText;
 
-    dispatch(editeCardAction(upCard));
+    dispatch(editCard(upCard));
     
     setEditCard(false);
     setUpCard(null);
@@ -103,7 +107,7 @@ export default function CardList() {
                   <button onClick={() => editar(card)}>
                     <img src={pencilIcon} />
                   </button>
-                  <button onClick={() => deleteCard(card.id)}>
+                  <button onClick={() => destroyCard(card.id)}>
                     <img src={trashIcon} />
                   </button>
                 </div>
@@ -114,14 +118,14 @@ export default function CardList() {
               <li className="fatos" key={card.id}>
                 <img src={fatosIcon} />
                 <div className="fatos-container">
-                  <h1>{card.title = 'Curiosidade'}</h1>
+                  <h1>Curiosidade</h1>
                   <p>{card.text}</p>
                 </div>
                 <div className="button-ud">
                   <button onClick={() => editar(card)}>
                     <img src={pencilIcon} />
                   </button>
-                  <button onClick={() => deleteCard(card.id)}>
+                  <button onClick={() => destroyCard(card.id)}>
                     <img src={trashIcon} />
                   </button>
                 </div>
@@ -138,7 +142,7 @@ export default function CardList() {
                   <button onClick={() => editar(card)}>
                     <img src={wPencilIcon} />
                   </button>
-                  <button onClick={() => deleteCard(card.id)}>
+                  <button onClick={() => destroyCard(card.id)}>
                     <img src={wTrashIcon} />
                   </button>
                 </div>
@@ -179,6 +183,7 @@ export default function CardList() {
 
                   <textarea 
                     value={CardText}
+                    name="text"
                     onChange={(e) => setCardText(e.target.value)}
                   />
                 </form>
@@ -194,7 +199,6 @@ export default function CardList() {
                   </label>
 
                   <input 
-                    type="text"
                     value={CardTitle}
                     onChange={(e) => setCardTitle(e.target.value)}
                   />
@@ -208,11 +212,9 @@ export default function CardList() {
                     onChange={(e) => setCardText(e.target.value)}
                   />
                 </form>
-
               </>
             }
-
-            <button type="button" onClick={addCard}>
+            <button type="button" onClick={createCard}>
               NOVO CARD
             </button>
           </div>

@@ -1,7 +1,9 @@
-import { createStore } from 'redux';
+import { configureStore } from '@reduxjs/toolkit';
 
-import reducers from '../reducers';
+import cards from './ducks/cards';//reducer
 
-const store = createStore(reducers);
-
-export default store;
+export default configureStore({
+    reducer: {
+        cards,
+    }
+});

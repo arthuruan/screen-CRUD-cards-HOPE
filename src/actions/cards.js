@@ -1,22 +1,26 @@
-export function addCard(text, title, typeId) {
-    return { 
-        type: 'ADD_CARD',
-        typeId,
-        text,
-        title,
-    }
-}
+// import { createAction } from '@reduxjs/toolkit';
 
-export function DeleteCard(id) {
-    return {
-        type: 'DELETE_CARD',
-        id,
-    }
-}
+// export const addCard = createAction('ADD_CARD');
 
-export function EditCard(card) {
-    return {
-        type: 'EDITE_CARD',
-        card
-    }
-}
+// // export function addCard(typeId, text, title) {
+// //     return { 
+// //         type: 'ADD_CARD',
+// //         typeId,
+// //         text,
+// //         title,
+// //     }
+// // }
+
+// export function deleteCard(id) {
+//     return {
+//         type: 'DELETE_CARD',
+//         id,
+//     }
+// }
+
+// export function editCard(card) {
+//     return {
+//         type: 'EDITE_CARD',
+//         card
+//     }
+// }
