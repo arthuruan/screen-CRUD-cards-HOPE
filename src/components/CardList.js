@@ -21,10 +21,8 @@ import pencilIcon from '../icons/pencil.png';
 import trashIcon from '../icons/trash.png';
 import wPencilIcon from '../icons/wpencil.png';
 import wTrashIcon from '../icons/wtrash.png';
-//actions
-import { addCard, deleteCard, editCard } from '../store/ducks/cards';
-
-import { getAllCards, addCardFetch } from '../store/fetchActions';
+//fetch actions
+import { readCardsFetch, addCardFetch, deleteCardFetch, editCardFetch } from '../store/fetchActions';
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -44,39 +42,38 @@ export default function CardList() {
   const [CardTitle, setCardTitle] = useState(null);
   const [EditCard, setEditCard] = useState(false);
   const [upCard, setUpCard] = useState(null);
-  const [UpCardText, setUpCardText] = useState(null);
-  const [UpCardTitle, setUpCardTitle] = useState(null);
+  const [UpCardText, setUpCardText] = useState('');
+  const [UpCardTitle, setUpCardTitle] = useState('');
 
   useEffect(() => {
-    dispatch(getAllCards());
-    console.log(cards);
-  }, [dispatch]);
+    dispatch(readCardsFetch());
+  });
 
   function createCard() {
     if(CardText != '') {
-      let newCard = {
+      const newCard = {
         typeId: CardType,
         text: CardText,
         title: CardTitle
       }
-      console.log(cards);
+
       dispatch(addCardFetch(newCard));
+
       setCardText('');
       setCardType('');
       setCardTitle('');
-      newCard = null;
     }
   }
 
   function destroyCard(id) {
-    dispatch(deleteCard(id));
+    dispatch(deleteCardFetch(id));
   }
 
   const editarCard = () => {
     upCard.title = UpCardTitle;
     upCard.text = UpCardText;
 
-    dispatch(editCard(upCard));
+    dispatch(editCardFetch(upCard));
     
     setEditCard(false);
     setUpCard(null);
@@ -85,8 +82,9 @@ export default function CardList() {
   }
 
   const editar = (card) => {
+    const updateCard = Object.assign({}, card);
     setEditCard(true);
-    setUpCard(card);
+    setUpCard(updateCard);
   }
 
   return (
@@ -97,7 +95,7 @@ export default function CardList() {
         <ul>
           { cards.map(card => (
               card.typeId === "dicas" && 
-              <li className="dicas" key={card.id}>
+              <li className="dicas" key={card._id}>
                 <img src={dicasIcon} />
                 <div className="dicas-container">
                   <h1>{card.title}</h1>
@@ -107,7 +105,7 @@ export default function CardList() {
                   <button onClick={() => editar(card)}>
                     <img src={pencilIcon} />
                   </button>
-                  <button onClick={() => destroyCard(card.id)}>
+                  <button onClick={() => destroyCard(card._id)}>
                     <img src={trashIcon} />
                   </button>
                 </div>
@@ -115,7 +113,7 @@ export default function CardList() {
           ))}
           { cards.map(card => (
               card.typeId === "fatos" && 
-              <li className="fatos" key={card.id}>
+              <li className="fatos" key={card._id}>
                 <img src={fatosIcon} />
                 <div className="fatos-container">
                   <h1>Curiosidade</h1>
@@ -125,7 +123,7 @@ export default function CardList() {
                   <button onClick={() => editar(card)}>
                     <img src={pencilIcon} />
                   </button>
-                  <button onClick={() => destroyCard(card.id)}>
+                  <button onClick={() => destroyCard(card._id)}>
                     <img src={trashIcon} />
                   </button>
                 </div>
@@ -133,7 +131,7 @@ export default function CardList() {
           ))}
           { cards.map(card => (
               card.typeId === "motivacional" && 
-              <li className="motivacional" key={card.id}>
+              <li className="motivacional" key={card._id}>
                 <div className="motivacional-container">
                   <img src={motivacionalIcon} />
                   <p>{card.text}</p>
@@ -142,7 +140,7 @@ export default function CardList() {
                   <button onClick={() => editar(card)}>
                     <img src={wPencilIcon} />
                   </button>
-                  <button onClick={() => destroyCard(card.id)}>
+                  <button onClick={() => destroyCard(card._id)}>
                     <img src={wTrashIcon} />
                   </button>
                 </div>
